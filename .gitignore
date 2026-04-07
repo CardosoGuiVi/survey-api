@@ -1,0 +1,23 @@
+# Secrets — NUNCA commitar
+.env
+.env.local
+ 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+dist/
+*.egg-info/
+ 
+# Alembic (não ignorar versions/)
+alembic/versions/*.pyc
+ 
+# IDE
+.vscode/
+.idea/
+ 
