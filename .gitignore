@@ -1,4 +1,4 @@
-# Secrets — NUNCA commitar
+# Secrets
 .env
 .env.local
  
@@ -14,10 +14,13 @@ htmlcov/
 dist/
 *.egg-info/
  
-# Alembic (não ignorar versions/)
+# Alembic
 alembic/versions/*.pyc
  
 # IDE
 .vscode/
 .idea/
- 
+
+# DBs
+dev.db
+*.db
