@@ -34,7 +34,6 @@ async def login(data: LoginRequest, db: AsyncDB) -> TokenResponse:
 
 @router.get("/me", response_model=UserResponse)
 async def me(current_user: CurrentUser, db: AsyncDB) -> UserResponse:
-
     user = await db.scalar(select(User).where(User.id == current_user["user_id"]))
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
