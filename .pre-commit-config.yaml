@@ -10,4 +10,13 @@ repos:
     rev: v1.10.0
     hooks:
       - id: mypy
-        args: [--ignore-missing-imports]
+        exclude: migrations/
+        additional_dependencies:
+          - pydantic>=2.0
+          - pydantic-settings>=2.0
+          - sqlalchemy>=2.0
+          - passlib[bcrypt]
+          - pyjwt
+        args:
+          - --ignore-missing-imports
+          - --exclude=migrations/
