@@ -13,6 +13,7 @@ htmlcov/
 .coverage
 dist/
 *.egg-info/
+*.log
  
 # Alembic
 alembic/versions/*.pyc
@@ -20,7 +21,3 @@ alembic/versions/*.pyc
 # IDE
 .vscode/
 .idea/
-
-# DBs
-dev.db
-*.db
