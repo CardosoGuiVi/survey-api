@@ -66,3 +66,10 @@ disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = false
 disable_error_code = ["misc", "no-untyped-def"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = [
+    "integration: tests that require external services (database, etc.)",
+    "unit: fast tests with no external dependencies",
+]
