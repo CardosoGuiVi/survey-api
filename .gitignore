@@ -21,3 +21,6 @@ alembic/versions/*.pyc
 # IDE
 .vscode/
 .idea/
+
+# Temp files in project
+temp_*
