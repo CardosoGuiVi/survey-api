@@ -5,7 +5,8 @@ from alembic import context
 
 import app.models  # noqa: F401 — registra todos os models
 from app.core.config import settings
-from app.core.database import Base, engine
+from app.core.database import engine
+from app.models.base import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
