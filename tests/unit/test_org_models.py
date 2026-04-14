@@ -2,6 +2,7 @@ import pytest
 import sqlalchemy as sa
 
 from app.models.org.department import Department
+from app.models.org.employee import Employee, EmployeeStatus
 from app.models.org.job import Job
 from app.models.org.position import Position
 from tests.helpers.schema_assertions import assert_model_schema
@@ -46,6 +47,34 @@ def test_position_model():
             "is_active": {
                 "type": sa.Boolean,
                 "default": True,
+                "nullable": False,
+            },
+            "created_at": {"nullable": False},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_employee_model():
+    assert_model_schema(
+        Employee,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "full_name": {"type": sa.String, "length": 255, "nullable": False},
+            "email": {
+                "type": sa.String,
+                "length": 255,
+                "nullable": False,
+                "unique": True,
+            },
+            "email_alias": {
+                "type": sa.String,
+                "length": 255,
+                "nullable": True,
+                "unique": True,
+            },
+            "status": {
+                "enum": EmployeeStatus,
                 "nullable": False,
             },
             "created_at": {"nullable": False},
