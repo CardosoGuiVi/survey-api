@@ -51,7 +51,7 @@ jobs:
           SURVEY_API_DATABASE__HOST: ${{ vars.SURVEY_API_DATABASE__HOST }}
           SURVEY_API_DATABASE__PORT: ${{ vars.SURVEY_API_DATABASE__PORT }}
           SURVEY_API_DATABASE__DB: ${{ secrets.SURVEY_API_DATABASE__DB }}
-          SURVEY_API_DATABASE__PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+          SURVEY_API_JWT_SECRET: ${{ secrets.SURVEY_API_JWT_SECRET }}
         run: uv run alembic upgrade head
 
       - name: Rodar testes
@@ -63,5 +63,5 @@ jobs:
           SURVEY_API_DATABASE__HOST: ${{ vars.SURVEY_API_DATABASE__HOST }}
           SURVEY_API_DATABASE__PORT: ${{ vars.SURVEY_API_DATABASE__PORT }}
           SURVEY_API_DATABASE__DB: ${{ secrets.SURVEY_API_DATABASE__DB }}
-          SURVEY_API_DATABASE__PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+          SURVEY_API_JWT_SECRET: ${{ secrets.SURVEY_API_JWT_SECRET }}
         run: uv run pytest --cov=app --cov-report=term-missing --cov-fail-under=70
