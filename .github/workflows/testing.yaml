@@ -1,0 +1,67 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Pytest
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ secrets.SURVEY_API_DATABASE__USER }}
+          POSTGRES_PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+          POSTGRES_DB: ${{ secrets.SURVEY_API_DATABASE__DB }}
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Instalar dependências
+        run: uv sync --frozen
+
+      - name: Rodar migrations
+        env:
+          SURVEY_API_ENVIRONMENT: ${{ vars.SURVEY_API_ENVIRONMENT }}
+          SURVEY_API_DEBUG: ${{ vars.SURVEY_API_DEBUG }}
+          SURVEY_API_DATABASE__USER: ${{ secrets.SURVEY_API_DATABASE__USER }}
+          SURVEY_API_DATABASE__PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+          SURVEY_API_DATABASE__HOST: ${{ vars.SURVEY_API_DATABASE__HOST }}
+          SURVEY_API_DATABASE__PORT: ${{ vars.SURVEY_API_DATABASE__PORT }}
+          SURVEY_API_DATABASE__DB: ${{ secrets.SURVEY_API_DATABASE__DB }}
+          SURVEY_API_DATABASE__PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+        run: uv run alembic upgrade head
+
+      - name: Rodar testes
+        env:
+          SURVEY_API_ENVIRONMENT: ${{ vars.SURVEY_API_ENVIRONMENT }}
+          SURVEY_API_DEBUG: ${{ vars.SURVEY_API_DEBUG }}
+          SURVEY_API_DATABASE__USER: ${{ secrets.SURVEY_API_DATABASE__USER }}
+          SURVEY_API_DATABASE__PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+          SURVEY_API_DATABASE__HOST: ${{ vars.SURVEY_API_DATABASE__HOST }}
+          SURVEY_API_DATABASE__PORT: ${{ vars.SURVEY_API_DATABASE__PORT }}
+          SURVEY_API_DATABASE__DB: ${{ secrets.SURVEY_API_DATABASE__DB }}
+          SURVEY_API_DATABASE__PASSWORD: ${{ secrets.SURVEY_API_DATABASE__PASSWORD }}
+        run: uv run pytest --cov=app --cov-report=term-missing --cov-fail-under=70
