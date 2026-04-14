@@ -1,0 +1,53 @@
+import pytest
+import sqlalchemy as sa
+
+from app.models.org.department import Department
+from app.models.org.job import Job
+from app.models.org.position import Position
+from tests.helpers.schema_assertions import assert_model_schema
+
+
+@pytest.mark.unit
+def test_job_schema():
+    assert_model_schema(
+        Job,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "title": {"type": sa.String, "length": 100, "nullable": False},
+            "family": {"type": sa.String, "length": 100, "nullable": False},
+            "level": {"type": sa.String, "length": 50, "nullable": False},
+            "created_at": {"nullable": False},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_department_model():
+    assert_model_schema(
+        Department,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "name": {"type": sa.String, "length": 100, "nullable": False},
+            "parent_department_id": {"type": sa.UUID, "nullable": True},
+            "created_at": {"nullable": False},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_position_model():
+    assert_model_schema(
+        Position,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "name": {"type": sa.String, "length": 100, "nullable": False},
+            "department_id": {"type": sa.UUID, "nullable": True},
+            "parent_position_id": {"type": sa.UUID, "nullable": True},
+            "is_active": {
+                "type": sa.Boolean,
+                "server_default": True,
+                "nullable": False,
+            },
+            "created_at": {"nullable": False},
+        },
+    )
