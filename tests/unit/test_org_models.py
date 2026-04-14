@@ -45,7 +45,7 @@ def test_position_model():
             "parent_position_id": {"type": sa.UUID, "nullable": True},
             "is_active": {
                 "type": sa.Boolean,
-                "server_default": True,
+                "default": True,
                 "nullable": False,
             },
             "created_at": {"nullable": False},
