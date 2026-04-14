@@ -3,6 +3,7 @@ import sqlalchemy as sa
 
 from app.models.org.department import Department
 from app.models.org.employee import Employee, EmployeeStatus
+from app.models.org.employee_identity import EmployeeIdentity
 from app.models.org.job import Job
 from app.models.org.position import Position
 from tests.helpers.schema_assertions import assert_model_schema
@@ -78,5 +79,20 @@ def test_employee_model():
                 "nullable": False,
             },
             "created_at": {"nullable": False},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_employee_identity_model():
+    assert_model_schema(
+        EmployeeIdentity,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "employee_id": {"type": sa.UUID, "nullable": False},
+            "provider": {"type": sa.String, "length": 50, "nullable": False},
+            "provider_sub": {"type": sa.String, "length": 255, "nullable": False},
+            "provider_email": {"type": sa.String, "length": 255, "nullable": False},
+            "linked_at": {"nullable": False},
         },
     )
