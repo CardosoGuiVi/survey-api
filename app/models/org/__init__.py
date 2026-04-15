@@ -1,5 +1,6 @@
 from .department import Department  # noqa: F401
 from .employee import Employee, EmployeeStatus  # noqa: F401
+from .employee_event import EmployeeEvent, EventType  # noqa: F401
 from .employee_identity import EmployeeIdentity  # noqa: F401
 from .job import Job  # noqa: F401
 from .job_history import JobHistory  # noqa: F401
@@ -10,6 +11,8 @@ __all__ = [
     "Department",
     "Employee",
     "EmployeeStatus",
+    "EmployeeEvent",
+    "EventType",
     "EmployeeIdentity",
     "Job",
     "JobHistory",
