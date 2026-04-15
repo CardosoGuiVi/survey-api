@@ -3,6 +3,7 @@ import sqlalchemy as sa
 
 from app.models.org.department import Department
 from app.models.org.employee import Employee, EmployeeStatus
+from app.models.org.employee_event import EmployeeEvent, EventType
 from app.models.org.employee_identity import EmployeeIdentity
 from app.models.org.job import Job
 from app.models.org.job_history import JobHistory
@@ -124,5 +125,24 @@ def test_job_history_model():
             "job_id": {"type": sa.UUID, "nullable": False},
             "started_at": {"type": sa.DateTime, "nullable": False},
             "ended_at": {"type": sa.DateTime, "nullable": True},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_employee_event_model():
+    assert_model_schema(
+        EmployeeEvent,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "employee_id": {"type": sa.UUID, "nullable": False},
+            "position_id": {"type": sa.UUID, "nullable": True},
+            "type": {
+                "enum": EventType,
+                "nullable": False,
+            },
+            "event_metadata": {"nullable": True},
+            "occurred_at": {"type": sa.DateTime, "nullable": False},
+            "notes": {"type": sa.Text, "nullable": True},
         },
     )
