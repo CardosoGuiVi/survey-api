@@ -5,6 +5,7 @@ from app.models.org.department import Department
 from app.models.org.employee import Employee, EmployeeStatus
 from app.models.org.employee_identity import EmployeeIdentity
 from app.models.org.job import Job
+from app.models.org.job_history import JobHistory
 from app.models.org.position import Position
 from app.models.org.position_assignment import PositionAssignment
 from tests.helpers.schema_assertions import assert_model_schema
@@ -107,6 +108,20 @@ def test_position_assignment_model():
             "id": {"type": sa.UUID, "pk": True},
             "position_id": {"type": sa.UUID, "nullable": False},
             "employee_id": {"type": sa.UUID, "nullable": False},
+            "started_at": {"type": sa.DateTime, "nullable": False},
+            "ended_at": {"type": sa.DateTime, "nullable": True},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_job_history_model():
+    assert_model_schema(
+        JobHistory,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "employee_id": {"type": sa.UUID, "nullable": False},
+            "job_id": {"type": sa.UUID, "nullable": False},
             "started_at": {"type": sa.DateTime, "nullable": False},
             "ended_at": {"type": sa.DateTime, "nullable": True},
         },

@@ -54,3 +54,12 @@ async def test_position_assignment_table_exists(engine):
             lambda sync_conn: inspect(sync_conn).get_table_names()
         )
     assert "position_assignments" in tables
+
+
+@pytest.mark.integration
+async def test_job_history_table_exists(engine):
+    async with engine.connect() as conn:
+        tables = await conn.run_sync(
+            lambda sync_conn: inspect(sync_conn).get_table_names()
+        )
+    assert "job_history" in tables
