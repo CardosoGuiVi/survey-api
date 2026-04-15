@@ -6,6 +6,7 @@ from app.models.org.employee import Employee, EmployeeStatus
 from app.models.org.employee_identity import EmployeeIdentity
 from app.models.org.job import Job
 from app.models.org.position import Position
+from app.models.org.position_assignment import PositionAssignment
 from tests.helpers.schema_assertions import assert_model_schema
 
 
@@ -94,5 +95,19 @@ def test_employee_identity_model():
             "provider_sub": {"type": sa.String, "length": 255, "nullable": False},
             "provider_email": {"type": sa.String, "length": 255, "nullable": False},
             "linked_at": {"nullable": False},
+        },
+    )
+
+
+@pytest.mark.unit
+def test_position_assignment_model():
+    assert_model_schema(
+        PositionAssignment,
+        {
+            "id": {"type": sa.UUID, "pk": True},
+            "position_id": {"type": sa.UUID, "nullable": False},
+            "employee_id": {"type": sa.UUID, "nullable": False},
+            "started_at": {"type": sa.DateTime, "nullable": False},
+            "ended_at": {"type": sa.DateTime, "nullable": True},
         },
     )
