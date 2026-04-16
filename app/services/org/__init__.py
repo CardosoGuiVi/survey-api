@@ -22,9 +22,12 @@ from .job_service import (  # noqa: F401
     update_job,
 )
 from .position_service import (  # noqa: F401
+    close_position_assignment,
     create_position,
+    create_position_assignment,
     delete_position,
     get_position,
+    list_position_assignments,
     list_positions,
     update_position,
 )
@@ -47,9 +50,12 @@ __all__ = [
     "get_job",
     "list_jobs",
     "update_job",
+    "close_position_assignment",
     "create_position",
+    "create_position_assignment",
     "list_positions",
     "get_position",
+    "list_position_assignments",
     "update_position",
     "delete_position",
 ]
