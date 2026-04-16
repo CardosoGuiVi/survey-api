@@ -4,6 +4,15 @@ from .department import (
     DepartmentResponse,
     DepartmentUpdate,
 )
+from .employee import (
+    EmployeeBase,
+    EmployeeCreate,
+    EmployeeIdentityBase,
+    EmployeeIdentityCreate,
+    EmployeeIdentityResponse,
+    EmployeeResponse,
+    EmployeeUpdate,
+)
 from .job import JobBase, JobCreate, JobResponse, JobUpdate
 from .position import PositionBase, PositionCreate, PositionResponse, PositionUpdate
 
@@ -12,6 +21,13 @@ __all__ = [
     "DepartmentCreate",
     "DepartmentResponse",
     "DepartmentUpdate",
+    "EmployeeBase",
+    "EmployeeCreate",
+    "EmployeeIdentityBase",
+    "EmployeeIdentityCreate",
+    "EmployeeIdentityResponse",
+    "EmployeeResponse",
+    "EmployeeUpdate",
     "JobBase",
     "JobCreate",
     "JobResponse",
