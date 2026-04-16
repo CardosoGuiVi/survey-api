@@ -5,9 +5,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_session
-from app.models import Employee, EmployeeIdentity
+from app.models import Employee, EmployeeEvent, EmployeeIdentity
 from app.schemas.org import (
     EmployeeCreate,
+    EmployeeEventCreate,
+    EmployeeEventResponse,
     EmployeeIdentityCreate,
     EmployeeIdentityResponse,
     EmployeeResponse,
@@ -101,3 +103,25 @@ async def list_employee_identities(
     session: AsyncSession = Depends(get_session),
 ) -> Sequence[EmployeeIdentity]:
     return await employee_service.list_employee_identities(session, employee_id)
+
+
+@router.post(
+    "/employee-events",
+    response_model=EmployeeEventResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_employee_event(
+    payload: EmployeeEventCreate,
+    session: AsyncSession = Depends(get_session),
+) -> EmployeeEvent:
+    return await employee_service.create_employee_event(session, payload)
+
+
+@router.get(
+    "/employees/{employee_id}/events", response_model=list[EmployeeEventResponse]
+)
+async def list_employee_events(
+    employee_id: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+) -> Sequence[EmployeeEvent]:
+    return await employee_service.list_employee_events(session, employee_id)
