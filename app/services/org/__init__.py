@@ -5,6 +5,15 @@ from .department_service import (  # noqa: F401
     list_departments,
     update_department,
 )
+from .employee_service import (  # noqa: F401
+    create_employee,
+    create_employee_identity,
+    delete_employee,
+    get_employee,
+    list_employee_identities,
+    list_employees,
+    update_employee,
+)
 from .job_service import (  # noqa: F401
     create_job,
     delete_job,
@@ -26,6 +35,13 @@ __all__ = [
     "get_department",
     "list_departments",
     "update_department",
+    "create_employee",
+    "create_employee_identity",
+    "delete_employee",
+    "get_employee",
+    "list_employee_identities",
+    "list_employees",
+    "update_employee",
     "create_job",
     "delete_job",
     "get_job",
