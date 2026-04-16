@@ -69,6 +69,12 @@ async def list_position_assignments(
     return result.scalars().all()
 
 
+async def get_position_assignment(
+    session: AsyncSession, assignment_id: uuid.UUID
+) -> PositionAssignment | None:
+    return await session.get(PositionAssignment, assignment_id)
+
+
 async def close_position_assignment(
     session: AsyncSession,
     assignment: PositionAssignment,
