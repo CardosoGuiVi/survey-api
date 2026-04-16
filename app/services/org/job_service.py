@@ -7,10 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.org import (
     Job,
 )
-from app.schemas.org import (
-    JobCreate,
-    JobUpdate,
-)
+from app.schemas.org.job import JobCreate, JobUpdate
 
 
 async def create_job(session: AsyncSession, payload: JobCreate) -> Job:
