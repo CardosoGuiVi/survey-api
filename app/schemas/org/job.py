@@ -25,3 +25,24 @@ class JobResponse(JobBase):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class JobHistoryBase(BaseModel):
+    employee_id: uuid.UUID
+    job_id: uuid.UUID
+    started_at: datetime
+
+
+class JobHistoryCreate(JobHistoryBase):
+    pass
+
+
+class JobHistoryUpdate(BaseModel):
+    ended_at: datetime | None = None
+
+
+class JobHistoryResponse(JobHistoryBase):
+    id: uuid.UUID
+    ended_at: datetime | None = None
+
+    model_config = {"from_attributes": True}
