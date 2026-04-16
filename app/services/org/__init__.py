@@ -15,9 +15,12 @@ from .employee_service import (  # noqa: F401
     update_employee,
 )
 from .job_service import (  # noqa: F401
+    close_job_history,
     create_job,
+    create_job_history,
     delete_job,
     get_job,
+    list_job_history,
     list_jobs,
     update_job,
 )
@@ -45,9 +48,12 @@ __all__ = [
     "list_employee_identities",
     "list_employees",
     "update_employee",
+    "close_job_history",
     "create_job",
+    "create_job_history",
     "delete_job",
     "get_job",
+    "list_job_history",
     "list_jobs",
     "update_job",
     "close_position_assignment",
