@@ -7,7 +7,6 @@ from pydantic import BaseModel
 from app.models.org import EmployeeStatus
 
 
-# Employee
 class EmployeeBase(BaseModel):
     full_name: str
     email: str
