@@ -17,6 +17,7 @@ from app.schemas.org import (
 from app.services.org import position_service
 
 router = APIRouter()
+router_assignment = APIRouter()
 
 
 @router.post(
@@ -76,7 +77,7 @@ async def delete_position(
     await position_service.delete_position(session, position)
 
 
-@router.post(
+@router_assignment.post(
     "/position-assignments",
     response_model=PositionAssignmentResponse,
     status_code=status.HTTP_201_CREATED,
@@ -88,7 +89,7 @@ async def create_position_assignment(
     return await position_service.create_position_assignment(session, payload)
 
 
-@router.get(
+@router_assignment.get(
     "/employees/{employee_id}/position-assignments",
     response_model=list[PositionAssignmentResponse],
 )
@@ -99,7 +100,7 @@ async def list_position_assignments(
     return await position_service.list_position_assignments(session, employee_id)
 
 
-@router.patch(
+@router_assignment.patch(
     "/position-assignments/{assignment_id}", response_model=PositionAssignmentResponse
 )
 async def close_position_assignment(

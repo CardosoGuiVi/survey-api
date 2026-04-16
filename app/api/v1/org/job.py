@@ -18,6 +18,7 @@ from app.schemas.org import (
 from app.services.org import job_service
 
 router = APIRouter()
+router_history = APIRouter()
 
 
 @router.post("/jobs", response_model=JobResponse, status_code=status.HTTP_201_CREATED)
@@ -75,7 +76,7 @@ async def delete_job(
     await job_service.delete_job(session, job)
 
 
-@router.post(
+@router_history.post(
     "/job-history",
     response_model=JobHistoryResponse,
     status_code=status.HTTP_201_CREATED,
@@ -87,7 +88,7 @@ async def create_job_history(
     return await job_service.create_job_history(session, payload)
 
 
-@router.get(
+@router_history.get(
     "/employees/{employee_id}/job-history", response_model=list[JobHistoryResponse]
 )
 async def list_job_history(
@@ -97,7 +98,9 @@ async def list_job_history(
     return await job_service.list_job_history(session, employee_id)
 
 
-@router.patch("/job-history/{job_history_id}", response_model=JobHistoryResponse)
+@router_history.patch(
+    "/job-history/{job_history_id}", response_model=JobHistoryResponse
+)
 async def close_job_history(
     job_history_id: uuid.UUID,
     payload: JobHistoryUpdate,

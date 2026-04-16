@@ -18,6 +18,8 @@ from app.schemas.org import (
 from app.services.org import employee_service
 
 router = APIRouter()
+router_identity = APIRouter()
+router_event = APIRouter()
 
 
 @router.post(
@@ -77,7 +79,7 @@ async def delete_employee(
     await employee_service.delete_employee(session, employee)
 
 
-@router.post(
+@router_identity.post(
     "/employees/{employee_id}/identities",
     response_model=EmployeeIdentityResponse,
     status_code=status.HTTP_201_CREATED,
@@ -95,7 +97,7 @@ async def create_employee_identity(
     return await employee_service.create_employee_identity(session, payload)
 
 
-@router.get(
+@router_identity.get(
     "/employees/{employee_id}/identities", response_model=list[EmployeeIdentityResponse]
 )
 async def list_employee_identities(
@@ -105,7 +107,7 @@ async def list_employee_identities(
     return await employee_service.list_employee_identities(session, employee_id)
 
 
-@router.post(
+@router_event.post(
     "/employee-events",
     response_model=EmployeeEventResponse,
     status_code=status.HTTP_201_CREATED,
@@ -117,7 +119,7 @@ async def create_employee_event(
     return await employee_service.create_employee_event(session, payload)
 
 
-@router.get(
+@router_event.get(
     "/employees/{employee_id}/events", response_model=list[EmployeeEventResponse]
 )
 async def list_employee_events(
