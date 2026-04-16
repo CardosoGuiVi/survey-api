@@ -7,14 +7,9 @@ from sqlalchemy.orm import DeclarativeBase
 
 from app.core.config import settings
 
-connect_args = (
-    {"check_same_thread": False} if settings.database.uri.startswith("sqlite") else {}
-)
-
 engine = create_async_engine(
     settings.database.uri,
     echo=settings.debug,
-    connect_args=connect_args,
     pool_pre_ping=True,
 )
 

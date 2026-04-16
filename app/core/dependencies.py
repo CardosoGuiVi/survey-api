@@ -6,12 +6,18 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.core.security import decode_access_token
 
-bearer = HTTPBearer()
+bearer = HTTPBearer(auto_error=False)
 
 
 async def get_current_user(
     credentials: Annotated[HTTPAuthorizationCredentials, Depends(bearer)],
 ) -> dict[str, Any]:
+    if credentials is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Token não fornecido",
+        )
+
     try:
         payload = decode_access_token(credentials.credentials)
         return payload

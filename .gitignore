@@ -1,6 +1,6 @@
 # Secrets
 .env
-.env.local
+.env.test
  
 # Python
 __pycache__/
@@ -13,6 +13,7 @@ htmlcov/
 .coverage
 dist/
 *.egg-info/
+*.log
  
 # Alembic
 alembic/versions/*.pyc
@@ -21,6 +22,5 @@ alembic/versions/*.pyc
 .vscode/
 .idea/
 
-# DBs
-dev.db
-*.db
+# Temp files in project
+temp_*
