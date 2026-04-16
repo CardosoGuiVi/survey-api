@@ -4,7 +4,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from app.models.org import EmployeeStatus
+from app.models.org import EmployeeStatus, EventType
 
 
 class EmployeeBase(BaseModel):
@@ -32,7 +32,6 @@ class EmployeeResponse(EmployeeBase):
     model_config = {"from_attributes": True}
 
 
-# EmployeeIdentity
 class EmployeeIdentityBase(BaseModel):
     employee_id: uuid.UUID
     provider: str
@@ -47,5 +46,24 @@ class EmployeeIdentityCreate(EmployeeIdentityBase):
 class EmployeeIdentityResponse(EmployeeIdentityBase):
     id: uuid.UUID
     linked_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class EmployeeEventBase(BaseModel):
+    employee_id: uuid.UUID
+    position_id: uuid.UUID | None = None
+    type: EventType
+    event_metadata: dict[str, str] | None = None
+    occurred_at: datetime
+    notes: str | None = None
+
+
+class EmployeeEventCreate(EmployeeEventBase):
+    pass
+
+
+class EmployeeEventResponse(EmployeeEventBase):
+    id: uuid.UUID
 
     model_config = {"from_attributes": True}
