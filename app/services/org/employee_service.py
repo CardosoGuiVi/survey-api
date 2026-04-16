@@ -8,7 +8,6 @@ from app.models.org import (
     Employee,
     EmployeeEvent,
     EmployeeIdentity,
-    JobHistory,
 )
 from app.schemas.org import (
     EmployeeCreate,
@@ -90,9 +89,3 @@ async def list_employee_events(
         .order_by(EmployeeEvent.occurred_at)
     )
     return result.scalars().all()
-
-
-async def get_job_history(
-    session: AsyncSession, job_history_id: uuid.UUID
-) -> JobHistory | None:
-    return await session.get(JobHistory, job_history_id)

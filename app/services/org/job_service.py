@@ -64,6 +64,12 @@ async def list_job_history(
     return result.scalars().all()
 
 
+async def get_job_history(
+    session: AsyncSession, job_history_id: uuid.UUID
+) -> JobHistory | None:
+    return await session.get(JobHistory, job_history_id)
+
+
 async def close_job_history(
     session: AsyncSession, job_history: JobHistory, payload: JobHistoryUpdate
 ) -> JobHistory:
