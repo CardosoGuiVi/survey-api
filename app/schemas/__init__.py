@@ -7,6 +7,10 @@ from .org import (
     JobCreate,
     JobResponse,
     JobUpdate,
+    PositionBase,
+    PositionCreate,
+    PositionResponse,
+    PositionUpdate,
 )
 
 __all__ = [
@@ -18,4 +22,8 @@ __all__ = [
     "JobCreate",
     "JobResponse",
     "JobUpdate",
+    "PositionBase",
+    "PositionCreate",
+    "PositionResponse",
+    "PositionUpdate",
 ]
