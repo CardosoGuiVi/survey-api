@@ -1,4 +1,3 @@
-# tests/integration/endpoints/test_departments.py
 import pytest
 from httpx import AsyncClient
 
