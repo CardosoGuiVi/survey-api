@@ -6,10 +6,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.org import (
     Employee,
+    EmployeeEvent,
     EmployeeIdentity,
+    JobHistory,
+    PositionAssignment,
 )
 from app.schemas.org import (
     EmployeeCreate,
+    EmployeeEventCreate,
     EmployeeIdentityCreate,
     EmployeeUpdate,
 )
@@ -66,3 +70,36 @@ async def list_employee_identities(
         select(EmployeeIdentity).where(EmployeeIdentity.employee_id == employee_id)
     )
     return result.scalars().all()
+
+
+async def create_employee_event(
+    session: AsyncSession, payload: EmployeeEventCreate
+) -> EmployeeEvent:
+    employee_event = EmployeeEvent(**payload.model_dump())
+    session.add(employee_event)
+    await session.commit()
+    await session.refresh(employee_event)
+    return employee_event
+
+
+async def list_employee_events(
+    session: AsyncSession, employee_id: uuid.UUID
+) -> Sequence[EmployeeEvent]:
+    result = await session.execute(
+        select(EmployeeEvent)
+        .where(EmployeeEvent.employee_id == employee_id)
+        .order_by(EmployeeEvent.occurred_at)
+    )
+    return result.scalars().all()
+
+
+async def get_position_assignment(
+    session: AsyncSession, assignment_id: uuid.UUID
+) -> PositionAssignment | None:
+    return await session.get(PositionAssignment, assignment_id)
+
+
+async def get_job_history(
+    session: AsyncSession, job_history_id: uuid.UUID
+) -> JobHistory | None:
+    return await session.get(JobHistory, job_history_id)
