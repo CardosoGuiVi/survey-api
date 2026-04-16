@@ -6,9 +6,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_session
-from app.models.org import Job
+from app.models.org import Job, JobHistory
 from app.schemas.org import (
     JobCreate,
+    JobHistoryCreate,
+    JobHistoryResponse,
+    JobHistoryUpdate,
     JobResponse,
     JobUpdate,
 )
@@ -70,3 +73,39 @@ async def delete_job(
             status_code=status.HTTP_404_NOT_FOUND, detail="Job not found"
         )
     await job_service.delete_job(session, job)
+
+
+@router.post(
+    "/job-history",
+    response_model=JobHistoryResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_job_history(
+    payload: JobHistoryCreate,
+    session: AsyncSession = Depends(get_session),
+) -> JobHistory:
+    return await job_service.create_job_history(session, payload)
+
+
+@router.get(
+    "/employees/{employee_id}/job-history", response_model=list[JobHistoryResponse]
+)
+async def list_job_history(
+    employee_id: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+) -> Sequence[JobHistory]:
+    return await job_service.list_job_history(session, employee_id)
+
+
+@router.patch("/job-history/{job_history_id}", response_model=JobHistoryResponse)
+async def close_job_history(
+    job_history_id: uuid.UUID,
+    payload: JobHistoryUpdate,
+    session: AsyncSession = Depends(get_session),
+) -> JobHistory:
+    job_history = await job_service.get_job_history(session, job_history_id)
+    if not job_history:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Job history not found"
+        )
+    return await job_service.close_job_history(session, job_history, payload)
