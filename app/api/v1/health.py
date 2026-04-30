@@ -25,18 +25,21 @@ async def health_check(session: AsyncSession = Depends(get_session)) -> JSONResp
             )
         ).scalar()
 
-        return {
-            "status": "healthy",
-            "updated_at": updated_at,
-            "dependencies": {
-                "database": {
-                    "status": "connected",
-                    "version": version,
-                    "max_connections": int(max_conn),  # type: ignore[arg-type]
-                    "opened_connections": opened_conn,
-                }
+        return JSONResponse(
+            status_code=200,
+            content={
+                "status": "healthy",
+                "updated_at": updated_at,
+                "dependencies": {
+                    "database": {
+                        "status": "connected",
+                        "version": version,
+                        "max_connections": int(max_conn),  # type: ignore[arg-type]
+                        "opened_connections": opened_conn,
+                    }
+                },
             },
-        }
+        )
 
     except Exception as e:
         return JSONResponse(
