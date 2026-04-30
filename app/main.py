@@ -18,5 +18,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(health.router, prefix="/api/v1")
-app.include_router(org.router, prefix="/api/v1")
+app.include_router(health.router, prefix="/v1")
+app.include_router(org.router, prefix="/v1")

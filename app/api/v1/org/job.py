@@ -1,4 +1,3 @@
-# app/api/v1/org.py
 import uuid
 from collections.abc import Sequence
 
