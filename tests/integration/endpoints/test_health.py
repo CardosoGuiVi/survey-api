@@ -4,7 +4,7 @@ from httpx import AsyncClient
 
 @pytest.mark.integration
 async def test_health_check_success(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/health")
+    response = await client.get("/v1/health")
 
     assert response.status_code == 200
     body = response.json()
@@ -15,7 +15,7 @@ async def test_health_check_success(client: AsyncClient) -> None:
 
 @pytest.mark.integration
 async def test_health_check_database_structure(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/health")
+    response = await client.get("/v1/health")
 
     body = response.json()
     db = body["dependencies"]["database"]
@@ -30,7 +30,7 @@ async def test_health_check_database_structure(client: AsyncClient) -> None:
 
 @pytest.mark.integration
 async def test_health_check_opened_connections(client: AsyncClient) -> None:
-    response = await client.get("/api/v1/health")
+    response = await client.get("/v1/health")
 
     body = response.json()
     opened = body["dependencies"]["database"]["opened_connections"]
