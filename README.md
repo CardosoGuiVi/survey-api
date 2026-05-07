@@ -1,2 +1,2 @@
-# survey-api
+# teammap-api
 Backend for a Survey app
